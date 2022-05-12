@@ -4,8 +4,7 @@ import React from 'react';
 import Question from './components/Question';
 import './App.css';
 
-function App() {
-    
+function App() {  
     const [questions, setQuestions] = React.useState([])
 
     /*
@@ -20,16 +19,39 @@ function App() {
             setQuestions(data.results)
         }
         fetchQuestions()
-        console.log(questions[0].difficulty)
-    }
-    ,[]
-    ) 
+    }, []) 
 
+    const renderQuestions = () =>{
+        return questions.map(question =>{
+            return <Question 
+                        key={question.question}
+                        question={question.question}
+                        incorrectAnswers={question.incorrect_answers}
+                        correctAnswer={question.correct_answer}
+                    />
+        })
+    }
+
+        /**
+     * Invoked when check answers button is clicked
+     * Wil check if each props.correctAnswer is equal to the event.target.textContent
+     */
+    const checkIfAnswersCorrect = (event) =>{
+    }
 
   return (
-    <div className="App">
-        <Question />
-    </div>
+    <main>
+        <div className="App">
+            {renderQuestions()}
+        </div>
+        <div class="check-button-container">
+            <button
+                className='check-answers'
+                onClick={checkIfAnswersCorrect}>
+                CHECK ANSWERS
+            </button>
+        </div>
+    </main>
   );
 }
 
